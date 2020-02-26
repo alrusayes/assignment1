@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(int argc, char* argv[])  {
-//Defining all the variables needed
+//Declaring all the variables needed
   ofstream file_;
   double sum = 0.00;
   double numA = 0.00;
@@ -34,30 +34,30 @@ int main(int argc, char* argv[])  {
   double numGC = 0.00;
   double numGT = 0.00;
 
-  double relativePropA = 0.00;
-  double relativePropG = 0.00;
-  double relativePropC = 0.00;
-  double relativePropT = 0.00;
+  double relativeProbA = 0.00;
+  double relativeProbG = 0.00;
+  double relativeProbC = 0.00;
+  double relativeProbT = 0.00;
 
-  double relativePropAA = 0.00;
-  double relativePropAT = 0.00;
-  double relativePropAG = 0.00;
-  double relativePropAC = 0.00;
+  double relativeProbAA = 0.00;
+  double relativeProbAT = 0.00;
+  double relativeProbAG = 0.00;
+  double relativeProbAC = 0.00;
 
-  double relativePropGA = 0.00;
-  double relativePropGT = 0.00;
-  double relativePropGG = 0.00;
-  double relativePropGC = 0.00;
+  double relativeProbGA = 0.00;
+  double relativeProbGT = 0.00;
+  double relativeProbGG = 0.00;
+  double relativeProbGC = 0.00;
 
-  double relativePropCA = 0.00;
-  double relativePropCT = 0.00;
-  double relativePropCG = 0.00;
-  double relativePropCC = 0.00;
+  double relativeProbCA = 0.00;
+  double relativeProbCT = 0.00;
+  double relativeProbCG = 0.00;
+  double relativeProbCC = 0.00;
 
-  double relativePropTA = 0.00;
-  double relativePropTT = 0.00;
-  double relativePropTC = 0.00;
-  double relativePropTG = 0.00;
+  double relativeProbTA = 0.00;
+  double relativeProbTT = 0.00;
+  double relativeProbTC = 0.00;
+  double relativeProbTG = 0.00;
 
   double count = 0.00;
   string line = "";
@@ -93,12 +93,11 @@ int main(int argc, char* argv[])  {
 // This while loop will run as long as the string u is equal to yes. At the end of the program, the user
 // will be asked if they want to process another file. If the answer is yes, then the while loop will run again.
 // If the answer is no, then the u will equal to no and the while loop will not run.
-
 while(u == "yes"){
 
     ifstream file(argv[1]);// opens the file that was passed through the command line
 
-    if (file.is_open() && file.good()) { //Checks if the file is open and is good.
+    if (file.is_open() && file.good()) { //Checks if the file is open and is good. Else it will state that file is not found
 
         char letter; //define letter
           while(getline(file, line)){ // gets every line in the file
@@ -215,7 +214,9 @@ while(u == "yes"){
         }
 			}
 
-      // This for loop
+      // This for loop takes every letter in each line
+      // and count the total number of letters and count
+      // the number of different letters (nucleotides) indiviually
       for (char& letter : line){
         if (letter != '\n'){
 
@@ -237,16 +238,20 @@ while(u == "yes"){
     }
   }
 
-  mean = sum/count;
+  mean = sum/count;// This calculates the mean of the DNA strings length where sum
+                  // is the total number of nucleotides and count is the number of lines
 
 
-  char num;
+
   ifstream myfile;
-  myfile.open("myFile.txt");
-  if (myfile.is_open() && myfile.good()) {
-    int num;
-  while(myfile >> num){
+  myfile.open("myFile.txt"); // opening the file that has the length of each lines
+  if (myfile.is_open() && myfile.good()) { // Checking if the file is open and is good
+    int num;// declaring an integer called num
 
+     // this while loop is saying as long as there is a number in the file,
+    //  calculate the double r and save the result into another file called
+   //   myFile2.txt.
+  while(myfile >> num){
     if (num != '\n'){
         double r = pow(num - mean,2);
         file_.open("myFile2.txt", iostream::app);
@@ -259,74 +264,86 @@ while(u == "yes"){
 
 
   ifstream myfile2;
-  myfile2.open("myFile2.txt");
-  if (myfile2.is_open() && myfile2.good()) {
-    float num2 = 0.00;
-    float sum2 = 0.00;
+  myfile2.open("myFile2.txt"); // Opening the file with the calculated r value
+  if (myfile2.is_open() && myfile2.good()) { // Checking if the file is open and is good
+    float num2 = 0.00; // declaring an a float called num2, which is the numbers inside myFile2
+    float sum2 = 0.00; // declaring an float called sum2, which is the sum of all numbers inside myFile2
+
+    // This while loop is to calculate sum2 or all numbers inside myFile2
+   //needed to calculate variance
   while(myfile2 >> num2){
     sum2 = sum2 + num2;
     }
-    variance = sum2/count;
-    std = sqrt(variance);
 
-    relativePropA = numA/sum;
-    relativePropG = numG/sum;
-    relativePropC = numC/sum;
-    relativePropT = numT/sum;
+    variance = sum2/count;// calculate variance using the numbers obtained previously
+    std = sqrt(variance); // calculate standard deviation using variance
 
-    relativePropAA = numAA/sum;
-    relativePropAT = numAT/sum;
-    relativePropAG = numAG/sum;
-    relativePropAC = numAC/sum;
+// All calculations of relative probability of bigrams and signle nucleotides
+    relativeProbA = numA/sum;
+    relativeProbG = numG/sum;
+    relativeProbC = numC/sum;
+    relativeProbT = numT/sum;
 
-    relativePropGA = numGA/sum;
-    relativePropGT = numGT/sum;
-    relativePropGG = numGG/sum;
-    relativePropGC = numGC/sum;
+    relativeProbAA = numAA/sum;
+    relativeProbAT = numAT/sum;
+    relativeProbAG = numAG/sum;
+    relativeProbAC = numAC/sum;
 
-    relativePropCA = numCA/sum;
-    relativePropCT = numCT/sum;
-    relativePropCG = numCG/sum;
-    relativePropCC = numCC/sum;
+    relativeProbGA = numGA/sum;
+    relativeProbGT = numGT/sum;
+    relativeProbGG = numGG/sum;
+    relativeProbGC = numGC/sum;
 
-    relativePropTA = numTA/sum;
-    relativePropTT = numTT/sum;
-    relativePropTC = numTC/sum;
-    relativePropTG = numTG/sum;
+    relativeProbCA = numCA/sum;
+    relativeProbCT = numCT/sum;
+    relativeProbCG = numCG/sum;
+    relativeProbCC = numCC/sum;
+
+    relativeProbTA = numTA/sum;
+    relativeProbTT = numTT/sum;
+    relativeProbTC = numTC/sum;
+    relativeProbTG = numTG/sum;
 
 
 
   }
 
-
+//Opening and appending all data to a file called "alrusayes".out
   ofstream output;
 
   output.open("alrusayes.out", ios::out | ios::app);
 
-  output<<"Ahmad Alrusayes\n"<<"2313076\n"<<"\nRelative probability of A: "
-  <<relativePropA<<"\n"<<"Relative probability of C: "<<relativePropC<<"\n"
-  <<"Relative probability of G: "<<relativePropG<<"\n"
-  <<"Relative probability of T: "<<relativePropT<<"\n"<<"-----"<<"\n"<<"Total number of nucleotides: "<<sum<<'\n'
+  output<<"Ahmad Alrusayes\n"<<"ID: 2313076\n"<<"\nRelative probability of A: "
+  <<relativeProbA<<"\n"<<"Relative probability of C: "<<relativeProbC<<"\n"
+  <<"Relative probability of G: "<<relativeProbG<<"\n"
+  <<"Relative probability of T: "<<relativeProbT<<"\n"<<"-----"<<"\n"<<"Total number of nucleotides: "<<sum<<'\n'
   <<"Mean of the length of DNA strings: "<<mean<<'\n'<<'\n'<<"The variance is: "<<variance<<'\n'
-  <<"The standard deviation is: "<<std<<'\n'<<'\n'<<"-----"<<"\nRelative probability of AA: "<<relativePropAA<<"\nRelative probability of AT: "
-  <<relativePropAT<<"\nRelative probability of AG: "<<relativePropAG<<"\nRelative probability of AC: "<<relativePropAC<<"\nRelative probability of CA: "
-  <<relativePropCA<<"\nRelative probability of CT: "<<relativePropCT<<"\nRelative probability of CG: "<<relativePropCG<<"\nRelative probability of CC: "
-  <<relativePropCC<<"\nRelative probability of TA: "<<relativePropTA<<"\nRelative probability of TT: "<<relativePropTT<<"\nRelative probability of TG: "
-  <<relativePropTG<<"\nRelative probability of TC: "<<relativePropTC<<'\n'<<'\n';
+  <<"The standard deviation is: "<<std<<'\n'<<'\n'<<"-----"<<"\nRelative probability of AA: "<<relativeProbAA<<"\nRelative probability of AT: "
+  <<relativeProbAT<<"\nRelative probability of AG: "<<relativeProbAG<<"\nRelative probability of AC: "<<relativeProbAC<<"\nRelative probability of CA: "
+  <<relativeProbCA<<"\nRelative probability of CT: "<<relativeProbCT<<"\nRelative probability of CG: "<<relativeProbCG<<"\nRelative probability of CC: "
+  <<relativeProbCC<<"\nRelative probability of TA: "<<relativeProbTA<<"\nRelative probability of TT: "<<relativeProbTT<<"\nRelative probability of TG: "
+  <<relativeProbTG<<"\nRelative probability of TC: "<<relativeProbTC<<'\n'<<'\n';
 
-
+// This for loop will generate 1000 DNA strings whose lengths follow a
+// Gaussian distribution with the same mean, variance, and relative
+// probability as calculated above.
   for(int i=0; i<=1000; ++i) {
 
-		    a = rand() / (RAND_MAX + 1.0);
-			  b = rand() / (RAND_MAX + 1.0);
-			  c = (sqrt(-2*log(a)))*(cos(2*M_PI*b));
+		    a = rand() / (RAND_MAX + 1.0); // produce a random number from 0 to 1 and assign it to the double a
+			  b = rand() / (RAND_MAX + 1.0); // produce a random number from 0 to 1 and assign it to the double b
+			  c = (sqrt(-2*log(a)))*(cos(2*M_PI*b)); // calculation of c, which is a standard Gaussian with mean 0 and variance 1.
+                                               // Because a and b will be randomized, this will generate differnt c's as long
+                                               // as i in the for loop is less than or equal to 1000.
 
-			  double d = (std*c) + mean;
+			  double d = (std*c) + mean;// Calculate d, which is the random standard Gaussian with mean 0 and variance 1 produced above times
+                                  // our standard deviation and mean. This will give us a DNA strings lengths that followe
+                                  // Guassian distribution with the same mean and variance as calculated above.
 
-			string newSeq = "";
-			int seqLength = 0;
-			double randRelativeProp;
+			string newSeq = ""; // Setting a new string to produce a new string in it.
+			int seqLength = 0; // Setting the length of the new sequence.
+			double randRelativeProb;
 
+// the d  is negative, then times it by -1 to get rid of the negative sign. Otherwise, d will equal to The length of the new sequence.
 			if (d < 0) {
 				seqLength = d * -1;
 			}
@@ -335,48 +352,58 @@ while(u == "yes"){
 				seqLength = d;
 			}
 
+      // This while loop will produce a new string as long as the new string produced is less than d or the length of the sequence we want.
 			while(seqLength > newSeq.length()) {
 
-				randRelativeProp = rand() / (RAND_MAX + 1.0);
+				randRelativeProb = rand() / (RAND_MAX + 1.0); // Produces a random relative probability
 
-				if(randRelativeProp > 0 && randRelativeProp < relativePropA) {
+        // if the random probability is bigger than zero and less than the relative probability of A, then add A to the sequence.
+        // This is to make sure that the relative probability calculated previously and from the DNA strings produced are the same
+
+				if(randRelativeProb > 0 && randRelativeProb < relativeProbA) {
 					newSeq += 'A';
 				}
 
-				else if(randRelativeProp > relativePropA && randRelativeProp < (relativePropA + relativePropT)) {
+        // The same logic is followed to account for all possible nucleatides and relative probability
+
+				else if(randRelativeProb > relativeProbA && randRelativeProb < (relativeProbA + relativeProbT)) {
 					newSeq += 'T';
 				}
 
-				else if(randRelativeProp > (relativePropA + relativePropT) && randRelativeProp < (relativePropA + relativePropT + relativePropC)) {
+				else if(randRelativeProb > (relativeProbA + relativeProbT) && randRelativeProb < (relativeProbA + relativeProbT + relativeProbC)) {
 					newSeq += 'C';
 				}
 
-				else if(randRelativeProp > (relativePropA + relativePropT + relativePropC) && randRelativeProp < (relativePropA + relativePropT + relativePropC + relativePropG)) {
+				else if(randRelativeProb > (relativeProbA + relativeProbT + relativeProbC) && randRelativeProb < (relativeProbA + relativeProbT + relativeProbC + relativeProbG)) {
 					newSeq += 'G';
 				}
 
 			}
-
+// appending all data to a file called "alrusayes".out
 			output << newSeq << endl;
 		}
-
+// closing the file
 		output.close();
 
 }
+// This is incase if the file inputed from the comand line is not found
  else {
         cout << "No file is found...\n";
         return 0;
     }
-
+// Asks if the user want to process another file
   cout << "Would you like to process another file? ";
 
   string u;
 
 	getline(cin, u);
 
+//lower case all the letter in the answer inputed to eliminate possible variations
   for (char& l : u){
     l = tolower(l);
   }
+
+// if the iput is not yes or no, the program will specifically ask the user to type yes or no
 
   if(!(u == "yes" || u == "no")) {
 		cout << "\nPlease type yes or no." << endl;
@@ -386,19 +413,21 @@ while(u == "yes"){
     }
 	}
 
+// if the answer is yes, then it will ask what is the file name and re run the program.
   if(u == "yes") {
 		cout <<"\nWhat is the file name? " <<endl;
     cin>>argv[1];
     cout <<"\nYour file name is " <<argv[1] <<"\n"<<endl;
     continue;
   }
-
+// if the answer is no then it will exit.
     else if(u == "no") {
 
 		    cout << "\nThank you.\n" << endl;
 		      exit(0);
 	       }
-
+// if the user did not type yes or no even after propmting them at the first time,
+// then the program will exits.
     else{
       cout << "Program will exit. Please run again if you want to process another file.\n";
       return 0;
